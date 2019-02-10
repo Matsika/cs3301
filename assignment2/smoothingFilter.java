@@ -121,63 +121,63 @@ public class SmoothingFilter extends Frame implements ActionListener{
                 }  
             target.repaint(); 
         }
-        else if(((Button)e.getSource()).getLabel().equals("5x5Median")){
-            int[] red = new int[26] ;
-            int[] green = new int[26];
-            int[] blue = new int[26];
-            
-            
+        int w =2;
             //the boundaries on which the filter can work in
             int xMin,xMax,yMin,yMax;
-            
-            
-            for ( int y=0, i=0 ; y<height ; y++ ){
-		for ( int x=0 ; x<width ; x++, i++ ) {
-                   
-                xMin = x - (25/2);
-                xMax = x + (25/2);
-                yMin = y - (25/2);
-                yMax = y + (25/2);
-                
-                //we must handle special cases outside the border
-                if(xMin < 0)
-                    xMin =0;
-                if(xMax >(width-1))
-                    xMax = width -1;
-                if(yMin < 0)
-                    yMin =0;
-                if(yMax > (height-1))
-                    yMax = height -1;
-                
-                int size = (xMax-xMin+1) * (yMax-yMin+1);
-                int v =0;
-                int[] f= new int[size];
-                for(int n = xMin;n < xMin;n++)
-                    for(int m = yMin;m < yMin;m++){
-                       f[v] = source.image.getRGB(x, y);
+            for(int q =w; q < height-w;q++){
+                for(int p=w; p < width -w; p++){
+                    int[] red = new int[26] ;
+                    int[] green = new int[26];
+                    int[] blue = new int[26];
+                    int i = 0;
+                    
+                    //handle boundaries
+                    xMin = p - (25/2);
+                    xMax = p + (25/2);
+                    yMin = q - (25/2);
+                    yMax = q + (25/2);
+                    
+                    if(xMin < 0)
+                        xMin =0;
+                    if(xMax >(width-1))
+                        xMax = width -1;
+                    if(yMin < 0)
+                        yMin =0;
+                    if(yMax > (height-1))
+                        yMax = height -1;
+                    
+                    int g = 0;
+                    int size = (xMax-xMin+1) * (yMax-yMin+1);
+                    int[] f= new int[size];
+                    for(int n = xMin;n < xMin;n++)
+                        for(int m = yMin;m < yMin;m++){
+                            f[g] = source.image.getRGB(q,p );
+                            g++;
                     }
-                
-                for(int p=0; p < f.length;p++){
-                    Color clr = new Color(source.image.getRGB(x, y));
-                    red[p] = clr.getRed() + f[p];
-                    green[p] = clr.getGreen() + f[p];
-                    blue[p] = clr.getBlue() + f[p];
+                    
+                    for(int v =-w; v <=w; v++){
+                        for(int u=-w; u <=w;u++){
+                            Color clr = new Color(source.image.getRGB(q+v, p+u));
+                            red[i] = clr.getRed()+ f[i];
+                            green[i] = clr.getGreen() + f[i];
+                            blue[i] = clr.getBlue() + f[i];
+                            i++;
+                        }
+                            
+       
+                    }
+                    Arrays.sort(red);
+                    Arrays.sort(green);
+                    Arrays.sort(blue);
+                    
+                    int newRed = red[13];
+                    int newGreen = green[13];
+                    int newBlue = blue[13];
+                    target.image.setRGB(q,p,(new Color(newRed,newGreen,newBlue)).getRGB());
+                    
                 }
-                Arrays.sort(red);
-                Arrays.sort(green);
-                Arrays.sort(blue);
-                
-                int newRed = red[13];
-                int newGreen = green[13];
-                int newBlue = blue[13];
-                target.image.setRGB(x, y,(new Color(newRed,newGreen,newBlue)).getRGB());
-                }
-            
+                target.repaint();
             }
-            target.repaint();
-            
-           
-        }
         else if(((Button)e.getSource()).getLabel().equals("Kuwahara")){
             int output[][]= new int[height][width];
             
