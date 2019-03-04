@@ -93,7 +93,7 @@ public class ImageThreshold extends Frame implements ActionListener{
             plot.clearObjects();
             plot.addObject(new VerticalBar(Color.BLACK, threshold, 100));
 	      }
-        else if( ((Button)e.getSource()).getLabel().equals("Automatic Selection Selection") ){
+        else if( ((Button)e.getSource()).getLabel().equals("Automatic Selection") ){
             int[] red = new int[256];
             int[] green = new int[256];
             int[] blue = new int[256];
