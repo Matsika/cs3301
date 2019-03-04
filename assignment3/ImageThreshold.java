@@ -90,6 +90,39 @@ public class ImageThreshold extends Frame implements ActionListener{
                         texThres.setText("128");
 			                  threshold = 128;
             }
+	    int red;
+            int green;
+            int blue;
+            for(int y =0 ; y< height; y++){
+                for(int x =0 ; x< width; x++){
+                    Color clr = new Color(input.getRGB(x, y));
+                    red = clr.getRed();
+                    green = clr.getGreen();
+                    blue = clr.getBlue();
+                    if(red > threshold){
+                        red = 255;
+                    }
+                    else{
+                        red = 0;
+                    }
+                    if(green > threshold){
+                        green = 255;
+                    }
+                    else{
+                        green =0;
+                    }
+                    if(blue > threshold){
+                        blue = 255;
+                    }
+                    else{
+                        blue =0;
+                    }
+                    
+                    int pixel = (red << 16) | (green << 8) | blue;
+                    target.image.setRGB(x,y,pixel);
+                }
+            }
+            target.repaint();      
             plot.clearObjects();
             plot.addObject(new VerticalBar(Color.BLACK, threshold, 100));
 	      }
