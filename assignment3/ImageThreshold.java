@@ -125,7 +125,7 @@ public class ImageThreshold extends Frame implements ActionListener{
                 }
                 average2 = total2/counter2;
                 newRedThres = (average1 + average2) /2;
-                if(Math.abs(redThres-newRedThres) <=1) break;
+                if(Math.abs(redThres-newRedThres) <=5) break;
             }
             
             int greenThres = 120;
@@ -147,7 +147,7 @@ public class ImageThreshold extends Frame implements ActionListener{
                 }
                 average2 = total2/counter2;
                 newGreenThres = (average1 + average2)/2;
-                if(Math.abs(greenThres - newGreenThres) <=1) break;
+                if(Math.abs(greenThres - newGreenThres) <=5) break;
                 
             }
             
@@ -170,7 +170,7 @@ public class ImageThreshold extends Frame implements ActionListener{
                 }
                 average2 = total2/counter2;
                 newBlueThres = (average1 + average2)/2;
-                if(Math.abs(blueThres - newBlueThres) <=1)break;
+                if(Math.abs(blueThres - newBlueThres) <=5)break;
                 
             }
             
@@ -207,11 +207,13 @@ public class ImageThreshold extends Frame implements ActionListener{
                     else{
                         newBlue = 0;
                     }
-                    
-                    target.image.setRGB(x, y,(new Color(newRed,newGreen,newBlue).getRGB()));
+			
+                    int pixel = (newRed << 16) | (newGreen << 8) | newBlue;
+                    target.image.setRGB(x, y,pixel);
                 }
                 
             }
+	    target.repaint();
         }
     }
     
