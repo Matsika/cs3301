@@ -104,6 +104,27 @@ public class HoughTransform extends Frame implements ActionListener {
             int[][] g = new int[height][width];
             int radius = Integer.parseInt(texRad.getText());
             // insert your implementation for circle here.
+		for(int rad = 0; rad < radius; rad++){
+                for(int x =0; x < width; x++){
+                    for(int y=0; y < height; y++){
+                        if ((source.image.getRGB(x, y) & 0x000000ff) == 0){
+                            for(int theta = 0; theta < 360; theta++){
+                                int a = (int) Math.round(x - radius * Math.cos(theta * (Math.PI *2) / 180));
+                                int b = (int) Math.round(y - radius * Math.sin(theta * (Math.PI *2) / 180));
+                                int r = (int) Math.pow((x-a), 2) + (int) Math.pow((y-b), 2);
+
+                                int rSquared = r*r;
+                                int rr = (int) Math.sqrt(rSquared);
+                                
+                                if((b >=0) && (b < height) && (a >=0) && (a < width)){
+                                    g[a][b]++;
+                                }
+                            } 
+                        }
+                    count++;
+                    }
+                }
+            }
             DisplayTransform(width, height, g);
         }
     }
