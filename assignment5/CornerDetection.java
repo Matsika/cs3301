@@ -119,4 +119,104 @@ public class CornerDetection extends Frame implements ActionListener {
 		}
 		target.repaint();
 	}
+	
+	//harrison implementation
+        public int[][][] Dog(){
+            int a2, a1, b2, b1, c1, c2,d1, d2,dx,dy;
+            
+            int[][][] x2_y2_xy = new int [width][height][3];
+            for(int q=0; q < height; q++){
+                b1 = q==0 ? q : q-1;
+                b2 = q<=1 ? q : q-2;
+                d1 = q== height-1 ? q : q+1;
+                d2 = q== height-2 ? q : q+2;
+                for(int p=0; p < width; p++){
+                    a1 = p==0 ? p : p-1;
+                    a2 = p<=1 ? p : p-2;
+                    c1 = p == width-1 ? p : p+1;
+                    c2 = p >= width-2 ? p : p+2;
+                    
+                    Color clr_a2d2 = new Color(source.image.getRGB(a2, d2));
+                    Color clr_a2d1 = new Color(source.image.getRGB(a2, d1));
+                    Color clr_a2q = new Color(source.image.getRGB(a2, q));
+                    Color clr_a2b1 = new Color(source.image.getRGB(a2, b1));
+                    Color clr_a2b2 = new Color(source.image.getRGB(a2, b2));
+                    
+                    Color clr_a1d2 = new Color(source.image.getRGB(a1, d2));
+                    Color clr_a1d1 = new Color(source.image.getRGB(a1, d1));
+                    Color clr_a1q = new Color(source.image.getRGB(a1, q));
+                    Color clr_a1b1 = new Color(source.image.getRGB(a1, b1));
+                    Color clr_a1b2 = new Color(source.image.getRGB(a1, b2));
+                    
+                    Color clr_pd2 = new Color(source.image.getRGB(p, d2));
+                    Color clr_pd1 = new Color(source.image.getRGB(p, d1));
+                    Color clr_pq = new Color(source.image.getRGB(p, q));
+                    Color clr_pb1 = new Color(source.image.getRGB(p, b1));
+                    Color clr_pb2 = new Color(source.image.getRGB(p, b2));
+                    
+                    Color clr_c1d2 = new Color(source.image.getRGB(c1, d2));
+                    Color clr_c1d1 = new Color(source.image.getRGB(c1, d1));
+                    Color clr_c1q = new Color(source.image.getRGB(c1, q));
+                    Color clr_c1b1 = new Color(source.image.getRGB(c1, b1));
+                    Color clr_c1b2 = new Color(source.image.getRGB(c1, b2));
+                    
+                    Color clr_c2d2 = new Color(source.image.getRGB(c2, d2));
+                    Color clr_c2d1 = new Color(source.image.getRGB(c2, d1));
+                    Color clr_c2q = new Color(source.image.getRGB(c2, q));
+                    Color clr_c2b1 = new Color(source.image.getRGB(c2, b1));
+                    Color clr_c2b2 = new Color(source.image.getRGB(c2, b2));
+                    
+                    int gray_a2d2 = (clr_a2d2.getRed() + clr_a2d2.getGreen() + clr_a2d2.getBlue())/3;
+                    int gray_a2d1 = (clr_a2d1.getRed() + clr_a2d1.getGreen() + clr_a2d1.getBlue())/3;
+                    int gray_a2q = (clr_a2q.getRed() + clr_a2q.getGreen() + clr_a2q.getBlue())/3;
+                    int gray_a2b1 = (clr_a2b1.getRed() + clr_a2b1.getGreen() + clr_a2b1.getBlue())/3;
+                    int gray_a2b2 = (clr_a2b2.getRed() + clr_a2b2.getGreen() + clr_a2b2.getBlue())/3;
+                    
+                    int gray_a1d2 = (clr_a1d2.getRed() + clr_a1d2.getGreen() + clr_a1d2.getBlue())/3;
+                    int gray_a1d1 = (clr_a1d1.getRed() + clr_a1d1.getGreen() + clr_a1d1.getBlue())/3;
+                    int gray_a1q = (clr_a1q.getRed() + clr_a1q.getGreen() + clr_a1q.getBlue())/3;
+                    int gray_a1b1 = (clr_a1b1.getRed() + clr_a1b1.getGreen() + clr_a1b1.getBlue())/3;
+                    int gray_a1b2 = (clr_a1b2.getRed() + clr_a1b2.getGreen() + clr_a1b2.getBlue())/3;
+                    
+                    int gray_pd2 = (clr_pd2.getRed() + clr_pd2.getGreen() + clr_pd2.getBlue())/3;
+                    int gray_pd1 = (clr_pd1.getRed() + clr_pd1.getGreen() + clr_pd1.getBlue())/3;
+                    int gray_pq = (clr_pq.getRed() + clr_pq.getGreen() + clr_pq.getBlue())/3;
+                    int gray_pb1 = (clr_pb1.getRed() + clr_pb1.getGreen() + clr_pb1.getBlue())/3;
+                    int gray_pb2 = (clr_pb2.getRed() + clr_pb2.getGreen() + clr_pb2.getBlue())/3;
+                    
+                    int gray_c1d2 = (clr_c1d2.getRed() + clr_c1d2.getGreen() + clr_c1d2.getBlue())/3;
+                    int gray_c1d1 = (clr_c1d1.getRed() + clr_c1d1.getGreen() + clr_c1d1.getBlue())/3;
+                    int gray_c1q = (clr_c1q.getRed() + clr_c1q.getGreen() + clr_c1q.getBlue())/3;
+                    int gray_c1b1 = (clr_c1b1.getRed() + clr_c1b1.getGreen() + clr_c1b1.getBlue())/3;
+                    int gray_c1b2 = (clr_c1b2.getRed() + clr_c1b2.getGreen() + clr_c1b2.getBlue())/3;
+                    
+                    int gray_c2d2 = (clr_c2d2.getRed() + clr_c2d2.getGreen() + clr_c2d2.getBlue())/3;
+                    int gray_c2d1 = (clr_c2d1.getRed() + clr_c2d1.getGreen() + clr_c2d1.getBlue())/3;
+                    int gray_c2q = (clr_c2q.getRed() + clr_c2q.getGreen() + clr_c2q.getBlue())/3;
+                    int gray_c2b1 = (clr_c2b1.getRed() + clr_c2b1.getGreen() + clr_c2b1.getBlue())/3;
+                    int gray_c2b2 = (clr_c2b2.getRed() + clr_c2b2.getGreen() + clr_c2b2.getBlue())/3;
+                    
+                    dx = (gray_c2b2 + 4 * gray_c2b1 + 7* gray_c2q + 4 * gray_c2d1 + gray_c2d2
+                            + 2 * gray_c1b2 + 10 * gray_c1b1 + 17 * gray_c1q + 10 * gray_c1d1 + 2 * gray_c1d2
+                            -2 * gray_a1b2 + 10 * gray_a1b1 - 17 * gray_a1q + 10 * gray_a1d1 + 2 * gray_a1d2
+                            - gray_a2d2 - 4 * gray_a2d1 - 7 * gray_a2q - 4 * gray_a2d1 - gray_a2d2)/116;
+                    
+                    dy = (gray_c2b2 + 4 * gray_c2b1 + 7* gray_c2q + 4 * gray_c2d1 + gray_c2d2
+                            + 2 * gray_c1b1 + 10 * gray_c1b1 + 17 * gray_pd1 + 10 * gray_c1d1 + 2 * gray_a2b1
+                            -2 * gray_c2d1 + 10 * gray_c2d1 - 17 * gray_a1q + 10 * gray_a1d1 + 2 * gray_a1d2
+                            - gray_c2d2 - 4 * gray_c1d2 - 7 * gray_pd2 - 4 * gray_a1d2 - gray_a2d2)/116;
+                    
+    
+                    
+                    x2_y2_xy[p][q][0] = dx * dx;
+                    x2_y2_xy[p][q][1] = dy * dy;
+                    x2_y2_xy[p][q][2] = Math.abs(dx*dy);
+                }
+                
+                
+            }
+            
+            return x2_y2_xy;
+            
+        }
 }
